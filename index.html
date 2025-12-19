@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>heart animation</title>
+  <title>Beautifull 💕 CSS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://use.typekit.net/trt3ngp.css">
   <style>
@@ -39,26 +39,12 @@
       pointer-events: none;
     }
 
-    h1 {
-      position: absolute;
-      top: 8vh;
-      left: 2rem;
-      right: 2rem;
-      text-align: center;
-      font-family: 'Parisienne', cursive;
-      font-weight: 400;
-      font-size: max(3rem, 2vh);
-      text-shadow: 0 0 10px rgba(255, 153, 204, 0.7);
-      opacity: 0;
-      animation: fadeIn 2s ease-in forwards 1s;
-    }
-
     #play-button {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 100;
+      z-index: 103;
       width: 100px;
       height: 100px;
       background-color: rgba(255, 102, 204, 0.5);
@@ -85,11 +71,89 @@
       to { opacity: 1; }
     }
   </style>
+  <style>
+    /* Estilos para el texto de introducción y la tarjeta de mensaje */
+    .intro-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards 1s;
+    }
+
+    .h1text {
+      font-family: 'Parisienne', cursive;
+      font-weight: 400;
+      font-size: max(4rem, 6vh);
+      text-shadow: 0 0 10px rgba(255, 153, 204, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .dates-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: max(1.5rem, 2.5vh);
+      font-family: 'Parisienne', cursive;
+    }
+
+    .intro-container.clicked {
+      animation: moveUpAndFade 1.5s ease-in-out forwards;
+    }
+
+    @keyframes moveUpAndFade {
+      to {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+      }
+    }
+
+    .message-card {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 120%); /* Oculto abajo */
+      z-index: 102;
+      background-color: rgba(43, 15, 43, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 204, 255, 0.3);
+      border-radius: 15px;
+      padding: 2rem 3rem;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      font-family: 'Parisienne', cursive;
+      font-size: max(2rem, 3.5vh);
+      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .message-card.visible {
+      transform: translate(-50%, -50%); /* Sube al centro */
+    }
+  </style>
 </head>
 
 <body>
   <canvas class="webgl"></canvas>
-  <h1 class="h1text">Para Ti Hermosa ♥️</h1>
+  <div class="intro-container">
+    <h1 class="h1text">Para Ti Hermosa ♥️</h1>
+    <div class="dates-container">
+      <!-- <p>25 / 07 / 2024</p> -->
+      <p>“A veces uno conoce personas que simplemente hacen bien… <br>sin hacer mucho. Tú eres una de esas.”</p>
+    </div>
+  </div>
+
+  <div class="message-card">
+    <p>Espero te vaya bien mañana</p>
+  </div>
+
   <button id="play-button" aria-label="Reproducir música">
     <svg viewBox="0 0 448 512">
       <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"/>
@@ -162,6 +226,7 @@
       // Aquí irá el resto del código JavaScript
       async init() {
         await this.addModelsAndParticles();
+        this.setupIntroAnimation();
         this.setupPlayButton();
         this.listenToResize();
         this.listenToMouseMove();
@@ -370,6 +435,25 @@
         });
       }
 
+      setupIntroAnimation() {
+        const introContainer = document.querySelector('.intro-container');
+        const messageCard = document.querySelector('.message-card');
+
+        if (!introContainer || !messageCard) return;
+
+        introContainer.addEventListener('click', () => {
+            const playButton = document.getElementById('play-button');
+            if (playButton.style.display !== 'none') return;
+
+            introContainer.classList.add('clicked');
+
+            setTimeout(() => {
+                messageCard.classList.add('visible');
+            }, 1000);
+
+        }, { once: true });
+      }
+
       setupPlayButton() {
         const playButton = document.getElementById('play-button');
         if (!playButton) return;
@@ -387,7 +471,7 @@
             const audioLoader = new THREE.AudioLoader();
 
             audioLoader.load(
-                "./musica1.mp3",
+                "./Assets/musica1.mp3",
                 (buffer) => {
                     this.sound.setBuffer(buffer);
                     this.sound.setLoop(true);
