@@ -60,7 +60,7 @@ Love_beautifull/
 
 ## 👤 Autor
 
-Proyecto creado como parte del portfolio de Kriptom.
+Proyecto creado como parte del portfolio de Whoamy2p.
 
 ---
 
