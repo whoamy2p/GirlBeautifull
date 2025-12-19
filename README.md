@@ -2,6 +2,10 @@
 
 ![Corazones](Assets/corazones.png)
 
+<p align="center">
+  <img src="Assets/Corazones.png" alt="IQ GeoSpatial Technology" width="auto">
+</p>
+
 Una página web hermosa e interactiva creada con HTML y CSS, con efectos visuales impactantes y animaciones elegantes.
 
 ## 📋 Descripción
